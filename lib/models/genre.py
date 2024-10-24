@@ -9,6 +9,55 @@ class Genre:
     self.name = name
     type(self).all[self.id] = self
 
+  @classmethod
+  def create_table(cls):
+    sql = """
+        CREATE TABLE IF NOT EXISTS genres(
+        id INTEGER PRIMARY KEY,
+        name TEXT)
+    """
+    CURSOR.execute(sql)
+    CONN.commit()
+
+  @classmethod
+  def drop_table(cls):
+    sql = """
+        DROP TABLE IF EXISTS genres;
+    """
+    CURSOR.execute(sql)
+    CONN.commit()
+  
+  def save(self):
+    sql = """
+        INSERT INTO genres(name) VALUES(?)
+    """
+    CURSOR.execute(sql, (self.name,))
+    CONN.commit()
+    self.id = CURSOR.lastrowid
+
+  @classmethod
+  def create(cls, name):
+    genre = cls(name)
+    genre.save()
+    return genre
+  
+  def update(self):
+    sql = """
+        UPDATE genres
+        SET name = ?
+        WHERE id = ?
+    """
+    CURSOR.execute(sql, (self.name, self.id))
+    CONN.commit()
+
+  def delete(self):
+    sql = """
+        DELETE FROM genres
+        WHERE id = ?
+    """
+    CURSOR.execute(sql, (self,id,))
+    CONN.commit()
+
   @property
   def name(self):
     return self._name
