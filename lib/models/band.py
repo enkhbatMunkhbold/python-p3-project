@@ -30,3 +30,47 @@ class Band:
     """
     CURSOR.execute(sql)
     CONN.commit()
+
+  def save(self):
+    sql = """
+        INSERT INTO bands(name, genre_id, members) VALUES(?, ?, ?)
+    """
+    CURSOR.execute(sql, (self.name, self.genre_id, self.members))
+    CONN.commit()
+    self.id = CURSOR.lastrowid
+
+  @classmethod
+  def create(cls, name, genre_id, members):
+    band = cls(name, genre_id, members)
+    band.save()
+    return band
+  
+  def update(self):
+    sql = """
+        UPDATE bands
+        SET name = ?, genre_id = ?, members = ?
+        WHERE id = ?
+    """
+    CURSOR.execute(sql, (self.name, self.genre_id, self.members, self.id))
+    CONN.commit()
+
+  def delete(self):
+    sql = """
+        DELETE FROM bands
+        WHERE id = ?
+    """
+    CURSOR.execute(sql, (self.id,))
+    CONN.commit()
+
+  @classmethod
+  def get_all_bands(cls):
+    sql = """ 
+        SELECT id, name, genre_id, members
+        FROM bands
+    """
+    CURSOR.execute(sql)
+    rows = CURSOR.fetchall()
+    bands = {row[0]: Band(row[1], row[2], row[3], row[0]) for row in rows}
+    return bands
+
+ 
