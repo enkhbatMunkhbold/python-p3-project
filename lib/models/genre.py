@@ -81,12 +81,12 @@ class Genre:
     return genre
 
   @classmethod
-  def get_by_id(cls, id):
+  def get_all(cls):
     sql = """ 
       SELECT * FROM genres
     """
     rows = CURSOR.execute(sql).fetchall()
-    return [genre for genre in rows]
+    return [cls.instance_from_db(row) for row in rows]
 
   @property
   def name(self):
