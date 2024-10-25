@@ -58,6 +58,36 @@ class Genre:
     CURSOR.execute(sql, (self,id,))
     CONN.commit()
 
+  @classmethod
+  def get_all_genres(cls):
+    sql = """ 
+        SELECT id, name
+        FROM genres
+    """
+    CURSOR.execute(sql)
+    rows = CURSOR.fetchall()
+    genres = {row[0]: Genre(row[1], row[0]) for row in rows}
+    return genres
+
+  @classmethod
+  def instance_from_db(cls, row):
+    genre = cls.all.get(row[0])
+    if genre:
+      genre.name = row[1]
+    else:
+      genre = cls(row[1])
+      genre.id = row[0]
+      cls.all[genre.id] = genre
+    return genre
+
+  @classmethod
+  def get_by_id(cls, id):
+    sql = """ 
+      SELECT * FROM genres
+    """
+    rows = CURSOR.execute(sql).fetchall()
+    return [genre for genre in rows]
+
   @property
   def name(self):
     return self._name
