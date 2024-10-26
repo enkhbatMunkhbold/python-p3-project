@@ -1,4 +1,5 @@
 from models.__init__ import CONN, CURSOR
+from genre import Genre
 
 class Band:
   all = {}
@@ -20,6 +21,17 @@ class Band:
       self._name = name
     else:
       raise ValueError("Band name must be a string with lenght more than 2 characters.")
+    
+  @property
+  def genre_id(self):
+    return self._genre_id
+  
+  @genre_id.setter
+  def genre_id(self, genre_id):
+    if isinstance(genre_id, int) and Genre.find_by_id(genre_id):
+      self._genre_id = genre_id
+    else:
+      raise ValueError("Genre id must be reference a genre in the database.")
 
   @classmethod
   def create_table(cls):
