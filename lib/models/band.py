@@ -74,14 +74,39 @@ class Band:
     CONN.commit()
 
   @classmethod
-  def get_all_bands(cls):
-    sql = """ 
-        SELECT id, name, genre_id, members
-        FROM bands
+  def instance_from_db(cls, row):
+    band = cls.all.get(row[0])
+    if band:
+      band.name = row[1]
+    else:
+      band = cls(row[1])
+      band.id = row[0]
+      cls.all[band.id] = band
+    return band
+  
+  @classmethod
+  def get_all(cls):
+    sql = """
+        SELECT * FROM bands
     """
-    CURSOR.execute(sql)
-    rows = CURSOR.fetchall()
-    bands = {row[0]: Band(row[1], row[2], row[3], row[0]) for row in rows}
-    return bands
-
+    rows = CURSOR.execute(sql).fetchall()
+    return [cls.instance_from_db(row) for row in rows]
+  
+  @classmethod
+  def find_by_id(cls, id):
+    sql = """
+        SELECT * FROM bands
+        WHERE id = ?
+    """
+    row = CURSOR.execute(sql, (id,)).fetchone()
+    return cls.instance_from_db(row) if row else None
+  
+  @classmethod
+  def find_by_name(cls, name):
+    sql = """
+        SELECT * FROM bands
+        WHERE name = ?
+    """
+    row = CURSOR.execute(sql, (name,)).fetchone()
+    return cls.instance_from_db(row) if row else None
  

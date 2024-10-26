@@ -70,17 +70,6 @@ class Genre:
     CONN.commit()
 
   @classmethod
-  def get_all_genres(cls):
-    sql = """ 
-        SELECT id, name
-        FROM genres
-    """
-    CURSOR.execute(sql)
-    rows = CURSOR.fetchall()
-    genres = {row[0]: Genre(row[1], row[0]) for row in rows}
-    return genres
-
-  @classmethod
   def instance_from_db(cls, row):
     genre = cls.all.get(row[0])
     if genre:
