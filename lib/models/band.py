@@ -10,6 +10,17 @@ class Band:
     self.members = members
     type(self).all[self.id] = self
 
+  @property
+  def name(self):
+    return self._name
+  
+  @name.setter
+  def name(self, name):
+    if isinstance(name, str) and len(name) > 2:
+      self._name = name
+    else:
+      raise ValueError("Band name must be a string with lenght more than 2 characters.")
+
   @classmethod
   def create_table(cls):
     sql = """

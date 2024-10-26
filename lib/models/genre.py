@@ -9,6 +9,17 @@ class Genre:
     self.name = name
     type(self).all[self.id] = self
 
+  @property
+  def name(self):
+    return self._name
+  
+  @name.setter
+  def name(self, name):
+    if isinstance(name, str) and len(name):
+      self._name = name
+    else:
+      raise ValueError("Genre name must be a non-empty string.")
+
   @classmethod
   def create_table(cls):
     sql = """
@@ -105,14 +116,3 @@ class Genre:
     """
     row = CURSOR.execute(sql, (name,)).fetchone()
     return cls.instance_from_db(row) if row else None
-
-  @property
-  def name(self):
-    return self._name
-  
-  @name.setter
-  def name(self, name):
-    if isinstance(name, str) and len(name):
-      self._name = name
-    else:
-      raise ValueError("Genre name must be a non-empty string.")
