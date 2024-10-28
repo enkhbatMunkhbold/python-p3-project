@@ -1,4 +1,4 @@
-from models.__init__ import CONN, CURSOR
+from __init__ import CONN, CURSOR
 from genre import Genre
 
 class Band:
@@ -61,6 +61,7 @@ class Band:
     CURSOR.execute(sql, (self.name, self.genre_id, self.members))
     CONN.commit()
     self.id = CURSOR.lastrowid
+    type(self).all[self.id] = self
 
   @classmethod
   def create(cls, name, genre_id, members):

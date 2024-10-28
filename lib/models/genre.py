@@ -1,4 +1,4 @@
-from models.__init__ import CONN, CURSOR
+from __init__ import CONN, CURSOR
 
 
 class Genre:
@@ -8,6 +8,9 @@ class Genre:
     self.id = id
     self.name = name
     type(self).all[self.id] = self
+
+  def __repr__(self):
+    return f"Genre {self.id}: {self.name}"
 
   @property
   def name(self):
@@ -45,6 +48,7 @@ class Genre:
     CURSOR.execute(sql, (self.name,))
     CONN.commit()
     self.id = CURSOR.lastrowid
+    type(self).all[self.id] = self
 
   @classmethod
   def create(cls, name):
