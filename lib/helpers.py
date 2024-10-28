@@ -1,4 +1,5 @@
-# lib/helpers.py
+from models.genre import Genre
+from models.band import Band
 
 def print_line():
     print("\n-------------------------------------------------\n")

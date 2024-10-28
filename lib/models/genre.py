@@ -109,3 +109,14 @@ class Genre:
     """
     row = CURSOR.execute(sql, (name,)).fetchone()
     return cls.instance_from_db(row) if row else None
+  
+  def bands(self):
+    from band import Band
+    sql = """
+        SELECT * FROM bands
+        WHERE genre_id = ?
+    """
+    CURSOR.execute(sql, (self.id,),)
+
+    rows = CURSOR.fetchall()
+    return [Band.instance_from_db(row) for row in rows]
