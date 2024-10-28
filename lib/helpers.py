@@ -4,8 +4,18 @@ from models.band import Band
 def print_line():
     print("\n-------------------------------------------------\n")
 
-def helper_1():
-    print("Performing useful function#1.")
+def create_genre():
+    name = input("Enter genre name: ")
+    try:
+        genre = Genre.create(name)
+        print(f"Success: {genre}")
+    except Exception as exc:
+        print("Error creating genre: ", exc)
+
+def list_genres():
+    genres = Genre.get_all()
+    for genre in genres:
+        print(genre)
 
 
 def exit_program():

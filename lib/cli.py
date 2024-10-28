@@ -3,7 +3,8 @@
 from helpers import (
     print_line,
     exit_program,
-    helper_1
+    create_genre,
+    list_genres
 )
 
 
@@ -14,7 +15,9 @@ def main():
         if choice == "0":
             exit_program()
         elif choice == "1":
-            helper_1()
+            create_genre()
+        elif choice == "2":
+            list_genres()
         else:
             print("Invalid choice")
 
@@ -25,7 +28,8 @@ def menu():
     print("      ROCK STARS OF THE WORLDS       \n\n\n\n")
     print("Please select music genre or add new one:\n")
     print("0. Exit the program")
-    print("1. Some useful function")
+    print("1. Create Genre")
+    print("2. List of genres")
     print_line()
 
 

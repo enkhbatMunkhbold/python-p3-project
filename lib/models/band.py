@@ -1,5 +1,5 @@
-from __init__ import CONN, CURSOR
-from genre import Genre
+from models.__init__ import CONN, CURSOR
+from models.genre import Genre
 
 class Band:
   all = {}
