@@ -4,40 +4,58 @@ from helpers import (
     print_line,
     exit_program,
     create_genre,
-    list_genres
+    list_genres,
+    find_genre_by_name,
+    delete_genre 
 )
 
 
 def main():
     main_menu()
     
-def main_menu():
-    # functions = []
+def main_menu():    
+    def new_genre():
+        create_genre()
+        main_menu()
+
+    functions = {"Create Genre": new_genre, "Genre List": genres_menu_choices, "Choose Genre": find_genre_by_name, "Delete": delete_genre}
+
     choice = ''
-    main_menu_choices()
-    while choice != 'e':        
-        choice = input("> ")        
-        if choice == "1":
-            create_genre()
-            main_menu_choices()
-        elif choice == "2":
-            genres_menu_choices()
-        elif choice == "e":
-            exit_program()
-        else:
-            print("Invalid choice")
-
-
-
-def main_menu_choices():
+    # main_menu_choices()
     print_line()
     print("Welcome to the World's Top Music Store\n")
     print("      ROCK STARS OF THE WORLDS       \n\n\n\n")
     print("Please select music genre or add new one:\n")    
-    print("1. Create Genre")
-    print("2. List of genres")
+    # print("1. Create Genre")
+    # print("2. List of genres")
+    for index, key in enumerate(functions):
+        print(f"{index + 1}: {key}")
     print("\nPress 'e' to exit the program.")
-    print_line()
+    print_line()  
+
+    while choice != 'e':        
+        choice = input("> ")        
+        # if choice == "1":
+        #     create_genre()
+        #     main_menu_choices()
+        # elif choice == "2":
+        #     genres_menu_choices()
+        # elif choice == "3":
+        #     find_genre_by_name()
+        # elif choice == "4":
+        #     delete_genre()
+        for index in range(len(functions)):
+            if choice == str(index):
+                functions[index]()
+                break
+        if choice == "e":
+            exit_program()
+        else:
+            print("Invalid choice")
+
+        
+# def main_menu_choices():
+    
 
 def genres_menu():
     pass

@@ -19,7 +19,7 @@ def find_genre_by_name():
     name = input("Enter genre name: ")
     return Genre.get_by_name(name)
 
-def delete_genres():
+def delete_genre():
     name_ = input("Enter the name of the genre you want to delete: ")
     if genre := Genre.find_by_name(name_):
         genre.delete()
