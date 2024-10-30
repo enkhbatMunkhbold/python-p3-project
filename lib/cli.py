@@ -12,17 +12,18 @@ def main():
     main_menu()
     
 def main_menu():
+    # functions = []
     choice = ''
     main_menu_choices()
     while choice != 'e':        
-        choice = input("> ")
-        if choice == "e":
-            exit_program()
-        elif choice == "1":
+        choice = input("> ")        
+        if choice == "1":
             create_genre()
             main_menu_choices()
         elif choice == "2":
             genres_menu_choices()
+        elif choice == "e":
+            exit_program()
         else:
             print("Invalid choice")
 
@@ -32,10 +33,10 @@ def main_menu_choices():
     print_line()
     print("Welcome to the World's Top Music Store\n")
     print("      ROCK STARS OF THE WORLDS       \n\n\n\n")
-    print("Please select music genre or add new one:\n")
-    print("Exit the program, press 'e'")
+    print("Please select music genre or add new one:\n")    
     print("1. Create Genre")
     print("2. List of genres")
+    print("\nPress 'e' to exit the program.")
     print_line()
 
 def genres_menu():
@@ -56,6 +57,8 @@ def genres_menu_choices():
             band_menu(genres[int(choice) - 1])
         elif choice == 'm':
             main_menu()
+        elif choice == 'e':
+            exit_program()
         else:
             print("Invalid choice")
         choice = input("> ")

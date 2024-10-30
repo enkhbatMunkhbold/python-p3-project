@@ -13,11 +13,19 @@ def create_genre():
         print("Error creating genre: ", exc)
 
 def list_genres():
-    # genres = Genre.get_all()
-    # for genre in genres:
-    #     print(genre)
     return Genre.get_all()
 
+def find_genre_by_name():
+    name = input("Enter genre name: ")
+    return Genre.get_by_name(name)
+
+def delete_genres():
+    name_ = input("Enter the name of the genre you want to delete: ")
+    if genre := Genre.find_by_name(name_):
+        genre.delete()
+        print(f"Genre {name_} deleted successfully.")
+    else:
+        print(f"Genre '{name_}' not found.")
 
 def exit_program():
     print("Goodbye!")
