@@ -9,27 +9,45 @@ from helpers import (
 
 
 def main():
-    while True:
-        menu()
+    main_menu()
+    
+def main_menu():
+    choice = ''
+    main_menu_choices()
+    while choice != 'e':        
         choice = input("> ")
-        if choice == "0":
+        if choice == "e":
             exit_program()
         elif choice == "1":
             create_genre()
         elif choice == "2":
-            list_genres()
+            genres_menu_choices()
         else:
             print("Invalid choice")
 
 
-def menu():
+
+def main_menu_choices():
     print_line()
     print("Welcome to the World's Top Music Store\n")
     print("      ROCK STARS OF THE WORLDS       \n\n\n\n")
     print("Please select music genre or add new one:\n")
-    print("0. Exit the program")
+    print("Exit the program, press 'e'")
     print("1. Create Genre")
     print("2. List of genres")
+    print_line()
+
+def genres_menu():
+    pass
+
+def genres_menu_choices():
+    genres = list_genres()
+    print_line()
+    print("Please select genre to see bands of that genre:\n")
+    for index, genre in enumerate(genres):
+        print(f"{index + 1}: {genre.name}")
+    print("\nPress 'm' to go back Main Menu!")
+    print("To exit the program type 'e'")
     print_line()
 
 

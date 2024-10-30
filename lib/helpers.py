@@ -13,9 +13,10 @@ def create_genre():
         print("Error creating genre: ", exc)
 
 def list_genres():
-    genres = Genre.get_all()
-    for genre in genres:
-        print(genre)
+    # genres = Genre.get_all()
+    # for genre in genres:
+    #     print(genre)
+    return Genre.get_all()
 
 
 def exit_program():
