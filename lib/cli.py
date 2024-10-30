@@ -20,6 +20,7 @@ def main_menu():
             exit_program()
         elif choice == "1":
             create_genre()
+            main_menu_choices()
         elif choice == "2":
             genres_menu_choices()
         else:
@@ -46,9 +47,21 @@ def genres_menu_choices():
     print("Please select genre to see bands of that genre:\n")
     for index, genre in enumerate(genres):
         print(f"{index + 1}: {genre.name}")
-    print("\nPress 'm' to go back Main Menu!")
-    print("To exit the program type 'e'")
+    print("\nPress 'm' to go back Main Menu.")
+    print("Press 'e' to exit the program.")
     print_line()
+    choice = input("> ")
+    while choice != 'e' or choice != 'm':
+        if choice.isdigit() and 0 < int(choice) <= len(genres):
+            band_menu(genres[int(choice) - 1])
+        elif choice == 'm':
+            main_menu()
+        else:
+            print("Invalid choice")
+        choice = input("> ")
+
+def band_menu(genre):
+    pass
 
 
 if __name__ == "__main__":
