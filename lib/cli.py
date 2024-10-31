@@ -18,7 +18,7 @@ def main_menu():
         create_genre()
         main_menu()
 
-    functions = {"Create Genre": new_genre, "Genre List": genres_menu_choices, "Choose Genre": find_genre_by_name, "Delete": delete_genre}
+    functions = [("Create Genre", new_genre), ("Genre List", genres_menu_choices), ("Choose Genre", find_genre_by_name), ("Delete", delete_genre)]
 
     choice = ''
     # main_menu_choices()
@@ -28,8 +28,8 @@ def main_menu():
     print("Please select music genre or add new one:\n")    
     # print("1. Create Genre")
     # print("2. List of genres")
-    for index, key in enumerate(functions):
-        print(f"{index + 1}: {key}")
+    for index in range(len(functions)):
+        print(f"{index + 1}: {functions[index][0]}")
     print("\nPress 'e' to exit the program.")
     print_line()  
 
@@ -45,8 +45,9 @@ def main_menu():
         # elif choice == "4":
         #     delete_genre()
         for index in range(len(functions)):
-            if choice == str(index):
-                functions[index]()
+            if choice == str(index - 1):
+                functions[index][1]()
+                # print(functions[index][1])
                 break
         if choice == "e":
             exit_program()
