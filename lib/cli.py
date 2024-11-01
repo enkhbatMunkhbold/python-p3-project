@@ -57,7 +57,7 @@ def genres_menu_choices():
     while choice != 'e' or choice != 'm':
         if choice.isdigit() and 0 < int(choice) <= len(genres):
             band_menu(genres[int(choice) - 1])
-        elif choice == 'm':
+        elif choice == 'b':
             main_menu()
         elif choice == 'e':
             exit_program()
@@ -66,17 +66,15 @@ def genres_menu_choices():
         choice = input("> ")
 
 def selecting_genre():
-    selected = {}
+    # selected = {}
     print_genre_list()
-    choice = input("> ")
+    choice = input("> ")    
     for index in range(len(genres)):
         if choice == str(index + 1):
-            selected = genres[index]
+            print(f"Selected genre: {genres[index].name}")
             break
 
-    # selected = find_genre_by_name(search_name)
     ending_lines_for_genre_methods()
-    print(f"Selected genre: {selected.name}")
 
 def print_genre_list():
     starting_lines_for_genre_methods()
@@ -88,7 +86,7 @@ def starting_lines_for_genre_methods():
     print("Please select genre to see bands of that genre:\n")
 
 def ending_lines_for_genre_methods():
-    print("\nPress 'm' to go back Main Menu.")
+    print("\nPress 'b' to go back Main Menu.")
     print("Press 'e' to exit the program.")
     print_line()
 
