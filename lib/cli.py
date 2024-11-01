@@ -68,8 +68,8 @@ def genres_menu_choices():
 def selecting_genre():
     print_genre_list()
     selected = find_genre_by_name()
-    print(selected)
     ending_lines_for_genre_methods()
+    print(f"{selected.name}")
 
 def print_genre_list():
     starting_lines_for_genre_methods()

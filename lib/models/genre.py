@@ -120,3 +120,5 @@ class Genre:
 
     rows = CURSOR.fetchall()
     return [Band.instance_from_db(row) for row in rows]
+
+# breakpoint()
