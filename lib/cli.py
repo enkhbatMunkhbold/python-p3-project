@@ -66,10 +66,17 @@ def genres_menu_choices():
         choice = input("> ")
 
 def selecting_genre():
+    selected = {}
     print_genre_list()
-    selected = find_genre_by_name()
+    choice = input("> ")
+    for index in range(len(genres)):
+        if choice == str(index + 1):
+            selected = genres[index]
+            break
+
+    # selected = find_genre_by_name(search_name)
     ending_lines_for_genre_methods()
-    print(f"{selected.name}")
+    print(f"Selected genre: {selected.name}")
 
 def print_genre_list():
     starting_lines_for_genre_methods()
@@ -88,7 +95,7 @@ def ending_lines_for_genre_methods():
 #**********************************************************************************************
 
 def band_menu(genre):
-    pass
+    print("Genre: " + genre)
 
 
 if __name__ == "__main__":

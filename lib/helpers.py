@@ -15,8 +15,8 @@ def create_genre():
 def list_genres():
     return Genre.get_all()
 
-def find_genre_by_name():
-    name = input("Enter genre name: ")
+def find_genre_by_name(name):
+    # name = input("Enter genre name: ")
     return Genre.find_by_name(name)
 
 def delete_genre():
