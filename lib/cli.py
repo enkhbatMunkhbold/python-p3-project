@@ -14,25 +14,31 @@ def main():
     main_menu()
 
 #**********************************  Genre Menu Methods ******************************************
-    
+
+genres = list_genres()
+   
 def main_menu():    
     def new_genre():
         create_genre()
         main_menu()
 
-    functions = [("Create Genre", new_genre), ("Genre List", genres_menu_choices), ("Choose Genre", find_genre_by_name), ("Delete", delete_genre)]
+    functions = [("Create Genre", new_genre), ("Genre List", genres_menu_choices), ("Choose Genre", selecting_genre), ("Delete", delete_genre)]
 
     choice = ''
     
     print_line()
     print("Welcome to the World's Top Music Store\n")
     print("      ROCK STARS OF THE WORLDS       \n\n\n\n")
-    print("Please select music genre or add new one:\n")  
+    print("Please select music genre or add new one:\n")
+    
+    #print Genre menu 
     for index in range(len(functions)):
         print(f"{index + 1}: {functions[index][0]}")
+
     print("\nPress 'e' to exit the program.")
     print_line()  
 
+    #selecting Genre menu
     while choice != 'e':        
         choice = input("> ")  
         for index in range(len(functions)):
@@ -44,15 +50,9 @@ def main_menu():
         else:
             print("Invalid choice")  
 
-def genres_menu_choices():
-    genres = list_genres()
-    print_line()
-    print("Please select genre to see bands of that genre:\n")
-    for index, genre in enumerate(genres):
-        print(f"{index + 1}: {genre.name}")
-    print("\nPress 'm' to go back Main Menu.")
-    print("Press 'e' to exit the program.")
-    print_line()
+def genres_menu_choices():    
+    print_genre_list()
+    ending_lines_for_genre_methods()
     choice = input("> ")
     while choice != 'e' or choice != 'm':
         if choice.isdigit() and 0 < int(choice) <= len(genres):
@@ -64,6 +64,26 @@ def genres_menu_choices():
         else:
             print("Invalid choice")
         choice = input("> ")
+
+def selecting_genre():
+    print_genre_list()
+    selected = find_genre_by_name()
+    print(selected)
+    ending_lines_for_genre_methods()
+
+def print_genre_list():
+    starting_lines_for_genre_methods()
+    for index, genre in enumerate(genres):
+        print(f"{index + 1}: {genre.name}")
+
+def starting_lines_for_genre_methods():
+    print_line()
+    print("Please select genre to see bands of that genre:\n")
+
+def ending_lines_for_genre_methods():
+    print("\nPress 'm' to go back Main Menu.")
+    print("Press 'e' to exit the program.")
+    print_line()
 
 #**********************************************************************************************
 
