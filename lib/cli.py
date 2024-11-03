@@ -13,7 +13,7 @@ from helpers import (
 def main():
     main_menu()
 
-#**********************************  Main Menu  ******************************************
+#//////////////////////////////////////////  Main Menu  ////////////////////////////////////////////
 
 def main_menu():    
     
@@ -73,22 +73,16 @@ def delete_chosen_genre():
 def selecting_genre():
     update_genre()
     main_menu()
-    # print(f"Chosen genre: {chosen_genre.name}")
-    # print_genre_list()
-    # choice = input("> ")    
-    # for index in range(len(genres)):
-    #     if choice == str(index + 1):
-    #         print(f"Selected genre: {genres[index].name}")
-    #         break
-    # print("\nPlease select genre to see bands of that genre!")
-    # ending_lines_for_genre_methods()
 
+#### Print Genre List
 def print_genre_list():
     genres = list_genres()
     starting_lines_for_genre_methods()
     print("             GENRE LIST       \n")
     for index, genre in enumerate(genres):
         print(f"{index + 1}: {genre.name}")
+
+#*************** Genre Table Helper Methods ********************************
 
 def starting_lines_for_genre_methods():
     print_line() 
@@ -100,7 +94,7 @@ def ending_lines_for_genre_methods():
     print("Press 'e' to exit the program.")    
     print_line()
 
-#**********************************************************************************************
+#///////////////////////////////////////////////////////////////////////////////////////////////
 
 def band_menu(genre):
     print("Genre: " + genre)
