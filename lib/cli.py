@@ -15,8 +15,6 @@ def main():
 
 #**********************************  Main Menu  ******************************************
 
-genres = list_genres()
-   
 def main_menu():    
     
     functions = [("Create Genre", new_genre), ("Genre List", genres_menu_choices), ("Update Genre's name", selecting_genre), ("Delete", delete_chosen_genre)]
@@ -72,7 +70,6 @@ def delete_chosen_genre():
     main_menu()
 
 #### Genre helping methods
-
 def selecting_genre():
     update_genre()
     main_menu()
@@ -87,6 +84,7 @@ def selecting_genre():
     # ending_lines_for_genre_methods()
 
 def print_genre_list():
+    genres = list_genres()
     starting_lines_for_genre_methods()
     print("             GENRE LIST       \n")
     for index, genre in enumerate(genres):
