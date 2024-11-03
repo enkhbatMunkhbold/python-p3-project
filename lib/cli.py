@@ -5,7 +5,7 @@ from helpers import (
     exit_program,
     create_genre,
     list_genres,
-    find_genre_by_name,
+    update_genre,
     delete_genre 
 )
 
@@ -19,10 +19,10 @@ genres = list_genres()
    
 def main_menu():    
     
-    functions = [("Create Genre", new_genre), ("Genre List", genres_menu_choices), ("Choose Genre", selecting_genre), ("Delete", delete_chosen_genre)]
+    functions = [("Create Genre", new_genre), ("Genre List", genres_menu_choices), ("Update Genre's name", selecting_genre), ("Delete", delete_chosen_genre)]
     choice = ''
 
-    #print Genre menu     
+    #print Main Menu     
     starting_lines_for_genre_methods()      
     print("             MAIN MENU       \n\n")
     for index in range(len(functions)):
@@ -32,7 +32,7 @@ def main_menu():
     print_line()  
 
     #calling methods in Genre menu
-    while choice != 'e':        
+    while True:        
         choice = input("> ")  
         for index in range(len(functions) + 1):
             if choice == str(index):
@@ -40,19 +40,19 @@ def main_menu():
                 break
         if choice == "e":
             exit_program()
-        else:
+        elif 1 > int(choice) > len(functions):
             print("Invalid choice") 
 
-#Create new Genre
+#### Create new Genre
 def new_genre():
         create_genre()
         main_menu()
         # print_genre_list()
 
-#Genre list
+#### Genre list
 def genres_menu_choices():    
     print_genre_list()
-    print("\nPlease select music genre or go back to add new one!")
+    print("\nPlease select music genre to find out more!")
     ending_lines_for_genre_methods()
     choice = input("> ")
     while choice != 'e' or choice != 'm':
@@ -66,22 +66,25 @@ def genres_menu_choices():
             print("Invalid choice")
         choice = input("> ")
 
-#Genre delete
+#### Genre delete
 def delete_chosen_genre():
     delete_genre()
     main_menu()
 
-#Genre helping methods
+#### Genre helping methods
 
 def selecting_genre():
-    print_genre_list()
-    choice = input("> ")    
-    for index in range(len(genres)):
-        if choice == str(index + 1):
-            print(f"Selected genre: {genres[index].name}")
-            break
-    print("\nPlease select genre to see bands of that genre!")
-    ending_lines_for_genre_methods()
+    update_genre()
+    main_menu()
+    # print(f"Chosen genre: {chosen_genre.name}")
+    # print_genre_list()
+    # choice = input("> ")    
+    # for index in range(len(genres)):
+    #     if choice == str(index + 1):
+    #         print(f"Selected genre: {genres[index].name}")
+    #         break
+    # print("\nPlease select genre to see bands of that genre!")
+    # ending_lines_for_genre_methods()
 
 def print_genre_list():
     starting_lines_for_genre_methods()
