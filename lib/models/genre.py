@@ -70,7 +70,7 @@ class Genre:
         DELETE FROM genres
         WHERE id = ?
     """
-    CURSOR.execute(sql, (self,id,))
+    CURSOR.execute(sql, (self.id,))
     CONN.commit()
 
   @classmethod

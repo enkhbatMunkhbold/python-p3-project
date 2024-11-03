@@ -19,7 +19,7 @@ genres = list_genres()
    
 def main_menu():    
     
-    functions = [("Create Genre", new_genre), ("Genre List", genres_menu_choices), ("Choose Genre", selecting_genre), ("Delete", delete_genre)]
+    functions = [("Create Genre", new_genre), ("Genre List", genres_menu_choices), ("Choose Genre", selecting_genre), ("Delete", delete_chosen_genre)]
     choice = ''
 
     #print Genre menu     
@@ -31,13 +31,11 @@ def main_menu():
     print("\nPress 'e' to exit the program.")    
     print_line()  
 
-    #selecting Genre menu
+    #calling methods in Genre menu
     while choice != 'e':        
         choice = input("> ")  
         for index in range(len(functions) + 1):
             if choice == str(index):
-                print(f"index: {index}")
-                print(functions[index-1][0])
                 functions[index - 1][1]()
                 break
         if choice == "e":
@@ -69,7 +67,9 @@ def genres_menu_choices():
         choice = input("> ")
 
 #Genre delete
-# def 
+def delete_chosen_genre():
+    delete_genre()
+    main_menu()
 
 #Genre helping methods
 

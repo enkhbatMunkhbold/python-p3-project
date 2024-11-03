@@ -8,7 +8,7 @@ def create_genre():
     name = input("Enter genre name: ")
     try:
         genre = Genre.create(name)
-        print(f"Success: {genre}")
+        print(f"Genre {genre.name} successfully created!")
     except Exception as exc:
         print("Error creating genre: ", exc)
 
