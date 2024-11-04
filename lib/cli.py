@@ -45,7 +45,6 @@ def main_menu():
 def new_genre():
         create_genre()
         main_menu()
-        # print_genre_list()
 
 #### Genre list
 def genres_menu_choices():    
