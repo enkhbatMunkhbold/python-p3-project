@@ -7,7 +7,7 @@ from models.band import Band
 def list_genres():
     return Genre.get_all()
 
-def main_menu():    
+def genre_menu():    
     
     functions = [("Create Genre", create_genre), ("Genre List", genres_list), ("Update Genre's name", update_genre), ("Delete", delete_genre)]
     choice = ''
@@ -41,7 +41,7 @@ def create_genre():
         print(f"Genre {genre.name} successfully created!")
     except Exception as exc:
         print("Error creating genre: ", exc)
-    main_menu()
+    genre_menu()
 
 #******************    Main Menu Genre list    *********************
 def genres_list(): 
@@ -54,7 +54,7 @@ def genres_list():
         if choice.isdigit() and 0 < int(choice) <= len(genres):
             chosen_genre_menu(genres[int(choice) - 1])
         elif choice == 'b':
-            main_menu()
+            genre_menu()
         elif choice == 'e':
             exit_program()
         else:
@@ -69,7 +69,7 @@ def delete_genre():
         print(f"Genre {name_} deleted successfully.")
     else:
         print(f"Genre '{name_}' not found!")
-    main_menu()
+    genre_menu()
 
 #***************    Main menu update methods   *******************
 def update_genre():
@@ -85,7 +85,7 @@ def update_genre():
             print("Error updating genre: ", exc)
     else:
         print(f"Genre {name_} not found!")
-    main_menu()
+    genre_menu()
 
 #************** Print Main Menu Genre List  ********************
 def print_genre_list():
@@ -120,7 +120,7 @@ def chosen_genre_menu(genre):
         if choice.isdigit() and 0 < int(choice) <= len(bands):
             band_menu(bands[int(choice) - 1])
         elif choice == 'b':
-            main_menu()
+            genre_menu()
         elif choice == 'e':
             exit_program()
         else:
