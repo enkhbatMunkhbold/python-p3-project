@@ -1,12 +1,16 @@
 # lib/cli.py
 
 from helpers import (
-    main_menu 
+    genre_menu, 
+    band_menu,
+    starting_lines_for_submenu
 )
 
 
 def main():
-    main_menu()
+    starting_lines_for_submenu
+    genre_menu()
+    band_menu()
 
 
 if __name__ == "__main__":

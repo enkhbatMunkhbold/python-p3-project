@@ -13,7 +13,7 @@ def genre_menu():
     choice = ''
 
     #print Main Menu     
-    starting_lines_for_genre_methods()      
+    starting_lines_for_submenu()      
     print("             MAIN MENU       \n\n")
     for index in range(len(functions)):
         print(f"{index + 1}: {functions[index][0]}")    
@@ -90,7 +90,7 @@ def update_genre():
 #************** Print Main Menu Genre List  ********************
 def print_genre_list():
     genres = list_genres()
-    starting_lines_for_genre_methods()
+    starting_lines_for_submenu()
     print("             GENRE LIST       \n")
     for index, genre in enumerate(genres):
         print(f"{index + 1}: {genre.name}")
@@ -100,7 +100,7 @@ def print_genre_list():
 def print_line():
     print("\n-------------------------------------------------\n")
 
-def starting_lines_for_genre_methods():
+def starting_lines_for_submenu():
     print_line() 
     print("Welcome to the World's Top Music Store")
     print("      ROCK STARS OF THE WORLDS       \n\n")   
@@ -113,7 +113,7 @@ def ending_lines_for_genre_methods():
 #//////////////////////////////////   CHOSEN GENRE MENU  //////////////////////////////////////////////////
 
 def chosen_genre_menu(genre):
-    starting_lines_for_genre_methods()
+    starting_lines_for_submenu()
     print(f"            GENRE: {genre.name.upper()}     ")
     bands = Band.get_by_genre(genre.name)
     while choice != 'e' or choice != 'm' or choice != 'l':
@@ -135,4 +135,6 @@ def exit_program():
 #////////////////////////////////////////    BAND MENU   /////////////////////////////////////////////
 
 def band_menu(band):
+    # options = [("Insert Band", create_band), ("Band List", bands_list), ("Update Band name", update_band), ("Delete", delete_band)]
+    starting_lines_for_submenu()
     print(f"            BAND: {band.name.upper()}")
