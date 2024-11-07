@@ -113,19 +113,23 @@ def ending_lines_for_genre_methods():
 #//////////////////////////////////   CHOSEN GENRE MENU  //////////////////////////////////////////////////
 
 def chosen_genre_menu(genre):
-    choice = input("> ")
+    options = [("Insert Band", create_band), ("Band List", bands_list), ("Update Band name", update_band), ("Delete", delete_band)]
     starting_lines_for_submenu()
-    print(f"            GENRE: {genre.name.upper()}     ")
-    bands = Band.get_by_genre(genre.id)
-    while choice != 'e' or choice != 'm' or choice != 'l':
-        if choice.isdigit() and 0 < int(choice) <= len(bands):
-            band_menu(bands[int(choice) - 1])
-        elif choice == 'b':
-            genre_menu()
-        elif choice == 'e':
-            exit_program()
-        else:
-            print("Invalid choice")
+    # choice = input("> ")    
+    print(f"            GENRE: {genre.name.upper()}     \n\n")
+    for index in range(len(options)):
+        print(f"{index + 1}: {options[index][0]}")
+    # bands = Band.get_by_genre(genre.id)
+    # while choice != 'e' or choice != 'm' or choice != 'l':
+    #     if choice.isdigit() and 0 < int(choice) <= len(bands):
+    #         band_menu(bands[int(choice) - 1])
+    #     elif choice == 'b':
+    #         genre_menu()
+    #     elif choice == 'e':
+    #         exit_program()
+    #     else:
+    #         print("Invalid choice")
+    
         
     ending_lines_for_genre_methods()
 
@@ -136,11 +140,12 @@ def exit_program():
 #////////////////////////////////////////    BAND MENU   /////////////////////////////////////////////
 
 def band_menu(band):
-    options = [("Insert Band", create_band), ("Band List", bands_list), ("Update Band name", update_band), ("Delete", delete_band)]
+    
     starting_lines_for_submenu()
     print(f"            BAND: {band.name.upper()}")
-    for index in range(len(options)):
-        print(f"{index + 1}: {options[index][0]}")
+
+    
+
     ending_lines_for_genre_methods()    
 
 def create_band():
