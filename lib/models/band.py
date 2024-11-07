@@ -124,11 +124,12 @@ class Band:
     return cls.instance_from_db(row) if row else None
   
   @classmethod
-  def get_by_genre(cls, genre):
+  def get_by_genre(cls, id):
     sql = """
         SELECT * FROM bands
-        WHERE genre = ?
+        WHERE genre_id == ?
     """
-    rows = CURSOR.execute(sql, (genre,)).fetchall()
+    
+    rows = CURSOR.execute(sql, (id,)).fetchall()
     return [cls.instance_from_db(row) for row in rows]
  
