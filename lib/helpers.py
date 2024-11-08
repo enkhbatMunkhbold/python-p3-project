@@ -25,28 +25,29 @@ def genre_menu():
     for index in range(len(functions)):
         print(f"{functions[index][0]}: {functions[index][1]}")    
     print_line() 
-    choice = input("> ") 
-    if choice.upper() in selections:
+    choice = input("> ").upper() 
+    if choice in selections:
         select_managing_methods(choice, functions, selections)
     else:
         select_genre_from_list(choice)
 
 #*****************  calling methods in Main menu  ****************
 def select_managing_methods(select, data_list1, data_list2 ):
+    # select = select.upper()
     while select != "E":        
         # select = input("> ")  
         for index in range(len(data_list1) + 1):
-            if select.upper() == data_list1[index - 1][0]:
+            if select == data_list1[index - 1][0]:
                 data_list1[index - 1][2]()
                 break
-        if select.upper() not in data_list2:
+        if select not in data_list2:
             print("Invalid choice") 
 
 #*****************   Main menu create genre   *******************
 def create_genre():
     name = input("Enter genre name: ")
     try:
-        genre = Genre.create(name)
+        genre = Genre.create(name.capitalize())
         print(f"Genre {genre.name} successfully created!")
     except Exception as exc:
         print("Error creating genre: ", exc)
@@ -55,24 +56,25 @@ def create_genre():
 #******************    Main Menu Genre list    *********************
 def select_genre_from_list(select): 
     genres = list_genres()   
+    chosen_genre_menu(select)
     # print_genre_list()
     # print("\nPlease select music genre to find out more!")
     # ending_lines_for_genre_methods()
     # choice = input("> ")
-    while int(select) < len(genres) :
-        if select.isdigit() and 0 < int(select) <= len(genres):
-            chosen_genre_menu(genres[int(select) - 1])
-        # elif choice == 'b':
-        #     genre_menu()
-        # elif choice == 'e':
-        #     exit_program()
-        else:
-            print("Invalid choice")
-        # choice = input("> ")
+    # while int(select) < len(genres) :
+    #     if 0 < int(select) <= len(genres):
+    #         chosen_genre_menu(genres[int(select) - 1])
+    #     # elif choice == 'b':
+    #     #     genre_menu()
+    #     # elif choice == 'e':
+    #     #     exit_program()
+    #     else:
+    #         print("Invalid choice")
+    #     # choice = input("> ")
 
 #***************    Main menu delete    ******************
 def delete_genre():
-    name_ = input("Enter the name of the genre you want to delete: ")
+    name_ = input("Enter the name of the genre you want to delete: ").upper()
     if genre := Genre.find_by_name(name_):
         genre.delete()
         print(f"Genre {name_} deleted successfully.")
@@ -148,10 +150,10 @@ def exit_program():
 
 #////////////////////////////////////////    BAND MENU   /////////////////////////////////////////////
 
-def band_menu(band):
+def band_menu():
     
     starting_lines_for_submenu()
-    print(f"            BAND: {band.name.upper()}")
+    # print(f"            BAND: {band.name.upper()}")
 
     
 
