@@ -34,7 +34,7 @@ def genre_menu():
 #*****************  calling methods in Main menu  ****************
 def select_managing_methods(select, data_list1, data_list2 ):
     # select = select.upper()
-    while select != "E":        
+    while True:        
         # select = input("> ")  
         for index in range(len(data_list1) + 1):
             if select == data_list1[index - 1][0]:
@@ -74,7 +74,7 @@ def select_genre_from_list(select):
 
 #***************    Main menu delete    ******************
 def delete_genre():
-    name_ = input("Enter the name of the genre you want to delete: ").upper()
+    name_ = input("Enter the name of the genre you want to delete: ").title()
     if genre := Genre.find_by_name(name_):
         genre.delete()
         print(f"Genre {name_} deleted successfully.")
@@ -84,10 +84,10 @@ def delete_genre():
 
 #***************    Main menu update methods   *******************
 def update_genre():
-    name_ = input("Enter genre name: ")
+    name_ = input("Enter genre name: ").title()
     if genre := Genre.find_by_name(name_):
         try:
-            name = input("Enter the genre's new name: ")
+            name = input("Enter the genre's new name: ").title()
             genre.name = name
 
             genre.update()
