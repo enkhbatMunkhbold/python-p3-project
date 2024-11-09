@@ -10,7 +10,7 @@ from helpers import (
 def main():
     starting_lines_for_submenu
     genre_menu()
-    band_menu()
+    # band_menu()
 
 
 if __name__ == "__main__":

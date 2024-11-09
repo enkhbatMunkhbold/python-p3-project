@@ -45,9 +45,9 @@ def select_managing_methods(select, data_list1, data_list2 ):
 
 #*****************   Main menu create genre   *******************
 def create_genre():
-    name = input("Enter genre name: ")
+    name = input("Enter genre name: ").title()
     try:
-        genre = Genre.create(name.capitalize())
+        genre = Genre.create(name)
         print(f"Genre {genre.name} successfully created!")
     except Exception as exc:
         print("Error creating genre: ", exc)
@@ -57,7 +57,7 @@ def create_genre():
 def select_genre_from_list(select): 
     genres = list_genres()  
     for index, genre in enumerate(genres):
-        if index + 1 == select:
+        if index + 1 == int(select):
             chosen_genre_menu(genre)
             break
     # chosen_genre_menu(select)
