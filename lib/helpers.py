@@ -55,8 +55,12 @@ def create_genre():
 
 #******************    Main Menu Genre list    *********************
 def select_genre_from_list(select): 
-    genres = list_genres()   
-    chosen_genre_menu(select)
+    genres = list_genres()  
+    for index, genre in enumerate(genres):
+        if index + 1 == select:
+            chosen_genre_menu(genre)
+            break
+    # chosen_genre_menu(select)
     # print_genre_list()
     # print("\nPlease select music genre to find out more!")
     # ending_lines_for_genre_methods()
