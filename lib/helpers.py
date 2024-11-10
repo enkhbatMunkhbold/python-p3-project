@@ -6,21 +6,20 @@ from models.band import Band
 
 def list_genres():
     return Genre.get_all()
+def list_of_bands():
+    return Band.get_all()
 
 def genre_menu():    
     
     functions = [("C", "Create Genre", create_genre), ("U", "Update Genre's name", update_genre), ("D", "Delete", delete_genre), ("E", "Exit", exit_program)]
     selections = ["C", "U", "D", "E"]
     
-    #print Main Menu     
-    starting_lines_for_submenu()  
+    #print Main Menu   
     if (list_genres()):
         print_genre_list()
     else:
         print("There is no Genre created yet!")
-
-    print("\n\n")    
-    # print("             MAIN MENU       \n\n")
+    print("\n\n") 
     
     for index in range(len(functions)):
         print(f"{functions[index][0]}: {functions[index][1]}")    
@@ -29,13 +28,12 @@ def genre_menu():
     if choice in selections:
         select_managing_methods(choice, functions, selections)
     else:
+        # print('Selected Genre')
         select_genre_from_list(choice)
 
 #*****************  calling methods in Main menu  ****************
 def select_managing_methods(select, data_list1, data_list2 ):
-    # select = select.upper()
-    while True:        
-        # select = input("> ")  
+    while True:  
         for index in range(len(data_list1) + 1):
             if select == data_list1[index - 1][0]:
                 data_list1[index - 1][2]()
@@ -60,21 +58,6 @@ def select_genre_from_list(select):
         if index + 1 == int(select):
             chosen_genre_menu(genre)
             break
-    # chosen_genre_menu(select)
-    # print_genre_list()
-    # print("\nPlease select music genre to find out more!")
-    # ending_lines_for_genre_methods()
-    # choice = input("> ")
-    # while int(select) < len(genres) :
-    #     if 0 < int(select) <= len(genres):
-    #         chosen_genre_menu(genres[int(select) - 1])
-    #     # elif choice == 'b':
-    #     #     genre_menu()
-    #     # elif choice == 'e':
-    #     #     exit_program()
-    #     else:
-    #         print("Invalid choice")
-    #     # choice = input("> ")
 
 #***************    Main menu delete    ******************
 def delete_genre():
@@ -125,23 +108,35 @@ def ending_lines_for_genre_methods():
     print("Press 'e' to exit the program.")    
     print_line()
 
+def print_bands_list(genre):
+    bands = Band.get_by_genre(genre.id)
+    for index, band in enumerate(bands):
+        print(f"{index + 1}: {band.name}")
+
 #//////////////////////////////////   CHOSEN GENRE MENU  //////////////////////////////////////////////////
 
 def chosen_genre_menu(genre):
-    options = [("Insert Band", create_band), ("Band List", bands_list), ("Update Band name", update_band), ("Delete", delete_band)]
+    options = [("Add Band", add_band), ("Update Band name", update_band), ("Delete", delete_band)]
     starting_lines_for_submenu()
         
     print(f"            GENRE: {genre.name.upper()}     \n\n")
+
+    if(list_of_bands()):
+        print_bands_list(genre)
+    else:
+        print(f"There is no {genre.name.title()} band in this list, yet!\n\n")
+
     for index in range(len(options)):
         print(f"{index + 1}: {options[index][0]}")
-    ending_lines_for_genre_methods()
+    ending_lines_for_genre_methods()    
 
-    bands = Band.get_by_genre(genre.id)
     choice = ''
-    while choice != 'e' or choice != 'm' or choice != 'l':
+    while True:
         choice = input("> ")
-        if choice.isdigit() and 0 < int(choice) <= len(bands):
-            band_menu(bands[int(choice) - 1])
+        if choice.isdigit() and 0 < int(choice) <= len(options):
+            for index in range(len(options)):
+                if index + 1 == int(choice):
+                    options[index][1]()
         elif choice == 'b':
             genre_menu()
         elif choice == 'e':
@@ -164,11 +159,8 @@ def band_menu():
 
     ending_lines_for_genre_methods()    
 
-def create_band():
-    print("Creating Band...")
-
-def bands_list():
-    print("List bands...")
+def add_band():
+    print("Adding Band...")
 
 def update_band():
     print("Updating Band...")
