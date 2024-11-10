@@ -4,7 +4,7 @@ from models.genre import Genre
 class Band:
   all = {}
 
-  def __init__(self, name, genre_id, members, id=None):
+  def __init__(self, name, genre_id, members=[], id=None):
     self.id = id
     self.name = name
     self.genre_id = genre_id

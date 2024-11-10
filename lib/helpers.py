@@ -136,7 +136,7 @@ def chosen_genre_menu(genre):
         if choice.isdigit() and 0 < int(choice) <= len(options):
             for index in range(len(options)):
                 if index + 1 == int(choice):
-                    options[index][1]()
+                    options[index][1](genre)
         elif choice == 'b':
             genre_menu()
         elif choice == 'e':
@@ -159,8 +159,17 @@ def band_menu():
 
     ending_lines_for_genre_methods()    
 
-def add_band():
-    print("Adding Band...")
+def add_band(genre):
+    name = input("Enter band name: ").title()
+    members = []
+    number_of_members = input("Number of member in the band: ")
+    for index in range(int(number_of_members)):
+        members[index] = input(f"Enter name of member {index}: ").title()
+    try:
+        band = Band.create(name, genre.id, members)
+        print(f"Band {band.name} has successfully created!")
+    except Exception as exc:
+        print("Error creating band: ", exc)
 
 def update_band():
     print("Updating Band...")
