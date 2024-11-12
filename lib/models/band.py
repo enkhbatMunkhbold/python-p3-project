@@ -94,8 +94,10 @@ class Band:
     band = cls.all.get(row[0])
     if band:
       band.name = row[1]
+      band.genre_id = row[2]
+      band.members = row[3]
     else:
-      band = cls(row[1])
+      band = cls(row[1], row[2], row[3])
       band.id = row[0]
       cls.all[band.id] = band
     return band

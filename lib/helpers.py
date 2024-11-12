@@ -117,24 +117,26 @@ def print_bands_list(genre):
 #//////////////////////////////////   CHOSEN GENRE MENU  //////////////////////////////////////////////////
 
 def chosen_genre_menu(genre):
-    options = [("Add Band", add_band), ("Update Band name", update_band), ("Delete", delete_band)]
+    options = [("A", "Add Band", add_band), ("U", "Update Band name", update_band), ("D", "Delete", delete_band)]
+    keys = ["A", "U", "D"]
     starting_lines_for_submenu()
         
     print(f"            GENRE: {genre.name.upper()}     \n\n")
 
     if(list_of_bands()):
         print_bands_list(genre)
+        print("\n\n")
     else:
         print(f"There is no {genre.name.title()} band in this list, yet!\n\n")
 
     for index in range(len(options)):
-        print(f"{index + 1}: {options[index][0]}")
+        print(f"{options[index][0]}: {options[index][1]}")
     ending_lines_for_genre_methods()    
 
     choice = ''
     while True:
         choice = input("> ")
-        if choice.isdigit() and 0 < int(choice) <= len(options):
+        if choice in keys:
             for index in range(len(options)):
                 if index + 1 == int(choice):
                     options[index][1](genre.id)
