@@ -11,6 +11,9 @@ class Band:
     self.members = members
     type(self).all[self.id] = self
 
+  def __str__(self):
+    return (f"First parameter: {self.name}, second parameter: {self.genre_id}, third parameter: {self.members}")
+
   @property
   def name(self):
     return self._name
@@ -28,7 +31,7 @@ class Band:
   
   @genre_id.setter
   def genre_id(self, genre_id):
-    if isinstance(genre_id, int) and Genre.find_by_id(genre_id):
+    if isinstance(genre_id, int):
       self._genre_id = genre_id
     else:
       raise ValueError("Genre id must be reference a genre in the database.")

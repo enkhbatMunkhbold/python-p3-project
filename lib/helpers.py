@@ -1,3 +1,4 @@
+import json
 from models.genre import Genre
 from models.band import Band
 
@@ -136,7 +137,7 @@ def chosen_genre_menu(genre):
         if choice.isdigit() and 0 < int(choice) <= len(options):
             for index in range(len(options)):
                 if index + 1 == int(choice):
-                    options[index][1](genre)
+                    options[index][1](genre.id)
         elif choice == 'b':
             genre_menu()
         elif choice == 'e':
@@ -159,14 +160,17 @@ def band_menu():
 
     ending_lines_for_genre_methods()    
 
-def add_band(genre):
-    name = input("Enter band name: ").title()
-    members = []
+def add_band(genre_id):
+
+    name = input("Enter band name: ").title()    
     number_of_members = input("Number of member in the band: ")
+    members = []
     for index in range(int(number_of_members)):
-        members[index] = input(f"Enter name of member {index}: ").title()
+        member = input(f"Enter name of member {index + 1}: ").title()
+        members.append(member)  
+
     try:
-        band = Band.create(name, genre.id, members)
+        band = Band.create(name, genre_id, json.dumps(members))
         print(f"Band {band.name} has successfully created!")
     except Exception as exc:
         print("Error creating band: ", exc)
