@@ -45,11 +45,14 @@ def select_managing_methods(select, data_list1, data_list2 ):
 #*****************   Main menu create genre   *******************
 def create_genre():
     name = input("Enter genre name: ").title()
-    try:
-        genre = Genre.create(name)
-        print(f"Genre {genre.name} successfully created!")
-    except Exception as exc:
-        print("Error creating genre: ", exc)
+    if Genre.find_by_name(name):
+        return None
+    else:
+        try:
+            genre = Genre.create(name)
+            print(f"Genre {genre.name} successfully created!")
+        except Exception as exc:
+            print("Error creating genre: ", exc)
     genre_menu()
 
 #******************    Main Menu Genre list    *********************
@@ -135,14 +138,22 @@ def chosen_genre_menu(genre):
 
     choice = ''
     while True:
-        choice = input("> ")
+        choice = input("> ").upper()
         if choice in keys:
             for index in range(len(options)):
+                if choice == options[index][0]:
+                    if choice == "A":
+                        options[index][2](genre.id)
+                    else:
+                        options[index][2]()
+        elif choice.isdigit():
+            bands = Band.get_by_genre(genre.id)
+            for index, band in enumerate(bands):
                 if index + 1 == int(choice):
-                    options[index][1](genre.id)
-        elif choice == 'b':
+                    band_menu(band)
+        elif choice == 'B':
             genre_menu()
-        elif choice == 'e':
+        elif choice == 'E':
             exit_program()
         else:
             print("Invalid choice")    
@@ -153,32 +164,48 @@ def exit_program():
 
 #////////////////////////////////////////    BAND MENU   /////////////////////////////////////////////
 
-def band_menu():
+def band_menu(group):
     
     starting_lines_for_submenu()
-    # print(f"            BAND: {band.name.upper()}")
-
-    
+    print(f"            BAND: {group.name.upper()}\n\n") 
+    print("Band Members:\n")
+    member_names = json.loads(group.members)
+    for index, member in enumerate(member_names):
+        print(f"{index + 1}: {member}")
 
     ending_lines_for_genre_methods()    
 
 def add_band(genre_id):
 
     name = input("Enter band name: ").title()    
-    number_of_members = input("Number of member in the band: ")
-    members = []
-    for index in range(int(number_of_members)):
-        member = input(f"Enter name of member {index + 1}: ").title()
-        members.append(member)  
+    if Band.find_by_name(name):
+        print("The band is already exists in the list!")
+        genre_menu()
+    else:
+        number_of_members = input("Number of member in the band: ")
+        members = []
+        for index in range(int(number_of_members)):
+            member = input(f"Enter name of member {index + 1}: ").title()
+            members.append(member)  
 
-    try:
-        band = Band.create(name, genre_id, json.dumps(members))
-        print(f"Band {band.name} has successfully created!")
-    except Exception as exc:
-        print("Error creating band: ", exc)
+        try:
+            band = Band.create(name, genre_id, json.dumps(members))
+            print(f"Band {band.name} has successfully created!")
+            ending_lines_for_genre_methods()
+        except Exception as exc:
+            print("Error creating band: ", exc)
+            ending_lines_for_genre_methods()
+
+        band_menu(band)
 
 def update_band():
     print("Updating Band...")
 
 def delete_band():
-    print("Deleting band...")
+    name_ = input("Enter the name of the band you want to delete: ").title()
+    if band := Band.find_by_name(name_):
+        band.delete()
+        print(f"Band {name_} deleted successfully.")
+    else:
+        print(f"Band '{name_}' not found!")
+    genre_menu()
