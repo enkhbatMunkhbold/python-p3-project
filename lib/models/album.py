@@ -60,5 +60,18 @@ class Album:
       except ValueError:
         raise ValueError("Album genre ID must be an integer.")
       
-
+  @classmethod
+  def create_table(cls):
+    sql = """
+        CREATE TABLE IF NOT EXISTS albums(
+        id INTEGER PRIMARY KEY,
+        title TEXT,
+        release_year INTEGER,
+        band_id INTEGER,
+        genre_id INTEGER,
+        FOREIGN KEY(band_id) REFERENCES bands(id),
+        FOREIGN KEY(genre_id) REFERENCES genres(id))
+    """
+    CURSOR.execute(sql)
+    CONN.commit()
   
