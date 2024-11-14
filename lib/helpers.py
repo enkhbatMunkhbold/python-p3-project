@@ -126,7 +126,7 @@ def chosen_genre_menu(genre):
         
     print(f"            GENRE: {genre.name.upper()}     \n\n")
 
-    if(list_of_bands()):
+    if(bands_by_genre(genre.id)):
         print_bands_list(genre)
         print("\n\n")
     else:
@@ -142,12 +142,13 @@ def chosen_genre_menu(genre):
         if choice in keys:
             for index in range(len(options)):
                 if choice == options[index][0]:
-                    if choice == "A":
-                        options[index][2](genre.id)
-                    else:
-                        options[index][2]()
+                    options[index][2](genre)
+                    # if choice == "A":
+                    #     options[index][2](genre)
+                    # else:
+                    #     options[index][2]()
         elif choice.isdigit():
-            bands = Band.get_by_genre(genre.id)
+            bands = bands_by_genre(genre.id)
             for index, band in enumerate(bands):
                 if index + 1 == int(choice):
                     band_menu(band)
@@ -175,7 +176,7 @@ def band_menu(group):
 
     ending_lines_for_genre_methods()    
 
-def add_band(genre_id):
+def add_band(genre):
 
     name = input("Enter band name: ").title()    
     if Band.find_by_name(name):
@@ -189,23 +190,29 @@ def add_band(genre_id):
             members.append(member)  
 
         try:
-            band = Band.create(name, genre_id, json.dumps(members))
+            band = Band.create(name, genre.id, json.dumps(members))
             print(f"Band {band.name} has successfully created!")
-            ending_lines_for_genre_methods()
+            # ending_lines_for_genre_methods()
+            chosen_genre_menu(genre)
         except Exception as exc:
             print("Error creating band: ", exc)
-            ending_lines_for_genre_methods()
+            # ending_lines_for_genre_methods()
+            chosen_genre_menu(genre)
 
-        band_menu(band)
+        # band_menu(band)
 
-def update_band():
-    print("Updating Band...")
+def update_band(genre):
+    print(f"Updating Band in genre {genre}")
 
-def delete_band():
+def delete_band(genre):
     name_ = input("Enter the name of the band you want to delete: ").title()
     if band := Band.find_by_name(name_):
         band.delete()
         print(f"Band {name_} deleted successfully.")
+        chosen_genre_menu(genre)
     else:
         print(f"Band '{name_}' not found!")
-    genre_menu()
+        chosen_genre_menu(genre)
+    
+def bands_by_genre(g):
+    return Band.get_by_genre(g)
