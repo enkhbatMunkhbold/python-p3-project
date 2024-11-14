@@ -145,3 +145,21 @@ class Album:
     """
     row = CURSOR.execute(sql, (id,)).fetchone()
     return cls.instance_from_db(row) if row else None
+  
+  @classmethod
+  def find_by_name(cls, name):
+    sql = """
+        SELECT * FROM albums
+        WHERE id = ?
+    """
+    row = CURSOR.execute(sql, (name,)).fetchone()
+    return cls.instance_from_db(row) if row else None
+  
+  @classmethod
+  def get_by_genre(cls, id):
+    sql = """
+        SELECT * FROM albums
+        WHERE genre_id == ?
+    """
+    rows = CURSOR.execute(sql, (id,)).fetchall()
+    return [cls.instance_from_db(row) for row in rows]
