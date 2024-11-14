@@ -75,3 +75,73 @@ class Album:
     CURSOR.execute(sql)
     CONN.commit()
   
+  @classmethod
+  def drop_table(cls):
+    sql = """
+        DROP TABLE IF EXISTS albums;
+    """
+    CURSOR.execute(sql)
+    CONN.commit()
+
+  def save(self):
+    sql = """
+        INSERT INTO albums(title, release_year, band_id, genre_id) VALUES(?, ?, ?, ?)
+    """
+    CURSOR.execute(sql, (self.title, self.release_year, self.band_id, self.genre_id))
+    CONN.commit()
+    self.id = CURSOR.lastrowid
+    type(self).all(self.id) = self
+
+  @classmethod
+  def create(cls, title, release_year, band_id, genre_id):
+    album = cls(title, release_year, band_id, genre_id)
+    album.save()
+    return album
+  
+  def update(self):
+    sql = """
+        UPDATE alubms
+        SET title = ?, release_year = ?, band_id = ?, genre_id = ?
+        WHERE id = ?
+    """
+    CURSOR.execute(sql, (self.title, self.release_year, self.band_id, self.genre_id))
+    CONN.commit()
+
+  def delete(self):
+    sql = """
+        DELETE FROM albums
+        WHERE id = ?
+    """
+    CURSOR.execute(sql, (self.id))
+    CONN.commit()
+
+  @classmethod
+  def instance_from_db(cls, row):
+    album = cls.all.get(row[0])
+    if album:
+      album.title = row[1]
+      album.release_year = row[2]
+      album.band_id = row[3]
+      album.genre_id = row[4]
+    else:
+      album = cls(row[1], row[2], row[3], row[4])
+      album.id = row[0]
+      cls.all[album.id] = album
+    return album
+  
+  @classmethod
+  def get_all(cls):
+    sql = """
+        SELECT * FROM albums
+    """
+    rows = CURSOR.execute(sql).fetchall()
+    return [cls.instance_from_db(row) for row in rows]
+  
+  @classmethod
+  def find_by_id(cls, id):
+    sql = """
+        SELECT * FROM albums
+        WHERE id = ?
+    """
+    row = CURSOR.execute(sql, (id,)).fetchone()
+    return cls.instance_from_db(row) if row else None
