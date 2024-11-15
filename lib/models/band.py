@@ -10,8 +10,8 @@ class Band:
     self.members = members
     type(self).all[self.id] = self
 
-  def __str__(self):
-    return (f"First parameter: {self.name}, second parameter: {self.genre_id}, third parameter: {self.members}")
+  # def __str__(self):
+  #   return (f"First parameter: {self.name}, second parameter: {self.genre_id}, third parameter: {self.members}")
 
   @property
   def name(self):
