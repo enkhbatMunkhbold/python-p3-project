@@ -1,8 +1,7 @@
 # lib/cli.py
 
 from helpers import (
-    genre_menu, 
-     
+    genre_menu,      
 )
 
 def main():

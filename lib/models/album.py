@@ -1,5 +1,5 @@
 from models.__init__ import CONN, CURSOR
-from models.genre import Genre
+# from models.genre import Genre
 from models.band import Band
 
 class Album:
@@ -90,7 +90,7 @@ class Album:
     CURSOR.execute(sql, (self.title, self.release_year, self.band_id, self.genre_id))
     CONN.commit()
     self.id = CURSOR.lastrowid
-    type(self).all(self.id) = self
+    type(self).all[self.id] = self
 
   @classmethod
   def create(cls, title, release_year, band_id, genre_id):

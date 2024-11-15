@@ -1,5 +1,6 @@
 from models.__init__ import CONN, CURSOR
-
+from models.band import Band
+from models.album import Album
 
 class Genre:
   all = {}
@@ -110,8 +111,7 @@ class Genre:
     row = CURSOR.execute(sql, (name,)).fetchone()
     return cls.instance_from_db(row) if row else None
   
-  def bands(self):
-    from band import Band
+  def bands(self):    
     sql = """
         SELECT * FROM bands
         WHERE genre_id = ?
@@ -120,5 +120,12 @@ class Genre:
 
     rows = CURSOR.fetchall()
     return [Band.instance_from_db(row) for row in rows]
+  
+  def albums(self):
+    sql = """
+        SELECT * FROM albums
+        WHERE genre_id = ?
+    """
+    CURSOR.execute(sql, (self.id,),)
 
 # breakpoint()

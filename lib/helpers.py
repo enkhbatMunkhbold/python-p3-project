@@ -29,7 +29,6 @@ def genre_menu():
     if choice in selections:
         select_managing_methods(choice, functions, selections)
     else:
-        # print('Selected Genre')
         select_genre_from_list(choice)
 
 #*****************  calling methods in Main menu  ****************
@@ -117,53 +116,61 @@ def print_bands_list(genre):
     for index, band in enumerate(bands):
         print(f"{index + 1}: {band.name}")
 
-#//////////////////////////////////   CHOSEN GENRE MENU  //////////////////////////////////////////////////
-
-def chosen_genre_menu(genre):
-    options = [("A", "Add Band", add_band), ("U", "Update Band name", update_band), ("D", "Delete", delete_band)]
-    keys = ["A", "U", "D"]
-    starting_lines_for_submenu()
-        
-    print(f"            GENRE: {genre.name.upper()}     \n\n")
-
-    if(bands_by_genre(genre.id)):
-        print_bands_list(genre)
-        print("\n\n")
-    else:
-        print(f"There is no {genre.name.title()} band in this list, yet!\n\n")
-
-    for index in range(len(options)):
-        print(f"{options[index][0]}: {options[index][1]}")
-    ending_lines_for_genre_methods()    
-
-    choice = ''
-    while True:
-        choice = input("> ").upper()
-        if choice in keys:
-            for index in range(len(options)):
-                if choice == options[index][0]:
-                    options[index][2](genre)
-                    # if choice == "A":
-                    #     options[index][2](genre)
-                    # else:
-                    #     options[index][2]()
-        elif choice.isdigit():
-            bands = bands_by_genre(genre.id)
-            for index, band in enumerate(bands):
-                if index + 1 == int(choice):
-                    band_menu(band)
-        elif choice == 'B':
-            genre_menu()
-        elif choice == 'E':
-            exit_program()
-        else:
-            print("Invalid choice")    
-   
 def exit_program():
     print("Goodbye!")
     exit()
 
+#//////////////////////////////////   CHOSEN GENRE MENU  //////////////////////////////////////////////////
+
+#print chosen genre menu and its band list
+def print_selected_genre_menu(g, data):
+    starting_lines_for_submenu()        
+    print(f"            GENRE: {g.name.upper()}     \n\n")
+
+    if(bands_by_genre(g.id)):
+        print_bands_list(g)
+        print("\n\n")
+    else:
+        print(f"There is no {g.name.title()} band in this list, yet!\n\n")
+
+    for index in range(len(data)):
+        print(f"{data[index][0]}: {data[index][1]}")
+    ending_lines_for_genre_methods() 
+
+def call_genre_bands_menu(select, gen, data1, data2):
+     while True:   
+        select = input("> ").upper()     
+        if select in data2:
+            for index in range(len(data1)):
+                if select == data1[index][0]:
+                    data1[index][2](gen)
+        elif select.isdigit():
+            bands = bands_by_genre(gen.id)
+            for index, band in enumerate(bands):
+                if index + 1 == int(select):
+                    band_menu(band)
+        elif select == 'B':
+            genre_menu()
+        elif select == 'E':
+            exit_program()
+        else:
+            print("Invalid choice")   
+
+
+def chosen_genre_menu(genre):
+    options = [("A", "Add Band", add_band), ("U", "Update Band name", update_band), ("D", "Delete", delete_band)]
+    keys = ["A", "U", "D"]
+
+    print_selected_genre_menu(genre, options)
+
+    choice = ''
+    call_genre_bands_menu(choice, genre, options, keys)
+   
+
 #////////////////////////////////////////    BAND MENU   /////////////////////////////////////////////
+
+def bands_by_genre(g):
+    return Band.get_by_genre(g)
 
 def band_menu(group):
     
@@ -192,14 +199,13 @@ def add_band(genre):
         try:
             band = Band.create(name, genre.id, json.dumps(members))
             print(f"Band {band.name} has successfully created!")
-            # ending_lines_for_genre_methods()
-            chosen_genre_menu(genre)
+            ending_lines_for_genre_methods()
+            # chosen_genre_menu(genre)
         except Exception as exc:
             print("Error creating band: ", exc)
-            # ending_lines_for_genre_methods()
-            chosen_genre_menu(genre)
-
-        # band_menu(band)
+            ending_lines_for_genre_methods()
+            # chosen_genre_menu(genre)
+        band_menu(band)
 
 def update_band(genre):
     print(f"Updating Band in genre {genre}")
@@ -214,5 +220,3 @@ def delete_band(genre):
         print(f"Band '{name_}' not found!")
         chosen_genre_menu(genre)
     
-def bands_by_genre(g):
-    return Band.get_by_genre(g)
