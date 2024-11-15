@@ -207,8 +207,20 @@ def add_band(genre):
             # chosen_genre_menu(genre)
         band_menu(band)
 
-def update_band(genre):
-    print(f"Updating Band in genre {genre}")
+def update_band(genre):    
+    name_ = input("Enter band name: ").title()
+    if band := Band.find_by_name(name_):
+        try:
+            name = input("Enter the band's new name: ").title()
+            band.name = name
+
+            band.update()
+            print(f"Band {name_} successfully updated to {band.name}!")
+        except Exception as exc:
+            print("Error updating band: ", exc)
+    else:
+        print(f"Band {name_} not found!")
+        chosen_genre_menu(genre)
 
 def delete_band(genre):
     name_ = input("Enter the name of the band you want to delete: ").title()

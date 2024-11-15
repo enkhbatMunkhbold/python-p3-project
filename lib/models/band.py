@@ -136,4 +136,11 @@ class Band:
     
     rows = CURSOR.execute(sql, (id,)).fetchall()
     return [cls.instance_from_db(row) for row in rows]
+  
+  def albums(self):
+    sql = """
+        SELECT * FROM albums
+        WHERE band_id = ?
+    """
+    CURSOR.execute(sql, (self.id,),)
  

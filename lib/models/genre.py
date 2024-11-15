@@ -10,9 +10,6 @@ class Genre:
     self.name = name
     type(self).all[self.id] = self
 
-  # def __repr__(self):
-  #   return f"{self.id}: {self.name}"
-
   @property
   def name(self):
     return self._name
@@ -127,5 +124,3 @@ class Genre:
         WHERE genre_id = ?
     """
     CURSOR.execute(sql, (self.id,),)
-
-# breakpoint()
