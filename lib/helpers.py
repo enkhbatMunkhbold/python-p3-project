@@ -125,7 +125,7 @@ def exit_program():
 #print chosen genre menu and its band list
 def print_selected_genre_menu(g, data):
     starting_lines_for_submenu()        
-    print(f"            GENRE: {g.name.upper()}     \n\n")
+    print(f"            GENRE: {g.name.upper()}\n")
 
     if(bands_by_genre(g.id)):
         print_bands_list(g)
@@ -191,6 +191,9 @@ def add_band(genre):
         genre_menu()
     else:
         number_of_members = input("Number of member in the band: ")
+        if not number_of_members.isdigit():
+            print("Invalid number of members!")
+            add_band(genre)
         members = []
         for index in range(int(number_of_members)):
             member = input(f"Enter name of member {index + 1}: ").title()
