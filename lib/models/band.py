@@ -1,4 +1,5 @@
 from models.__init__ import CONN, CURSOR
+from lib.models.band_genre import BandGenre
 
 class Band:
   all = {}
@@ -8,10 +9,7 @@ class Band:
     self.name = name
     self.genre_id = genre_id
     self.members = members
-    type(self).all[self.id] = self
-
-  # def __str__(self):
-  #   return (f"First parameter: {self.name}, second parameter: {self.genre_id}, third parameter: {self.members}")
+    type(self).all[self.id] = self  
 
   @property
   def name(self):
@@ -34,6 +32,9 @@ class Band:
       self._genre_id = genre_id
     else:
       raise ValueError("Genre id must be reference a genre in the database.")
+    
+  def genres_of_band(self):
+    return [m for m in BandGenre.all if m.band == self]
 
   @classmethod
   def create_table(cls):

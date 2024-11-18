@@ -1,6 +1,6 @@
 from models.__init__ import CONN, CURSOR
 from models.band import Band
-from models.album import Album
+from models.band_genre import BandGenre
 
 class Genre:
   all = {}
@@ -20,6 +20,9 @@ class Genre:
       self._name = name
     else:
       raise ValueError("Genre name must be a non-empty string.")
+    
+  def genres_of_band(self):
+    return [m for m in BandGenre.all if m.genre == self]
 
   @classmethod
   def create_table(cls):

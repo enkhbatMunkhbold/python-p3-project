@@ -1,5 +1,5 @@
 from models.__init__ import CONN, CURSOR
-# from models.genre import Genre
+from models.genre import Genre
 from models.band import Band
 
 class Album:
