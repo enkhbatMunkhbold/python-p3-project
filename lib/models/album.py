@@ -1,16 +1,15 @@
 from models.__init__ import CONN, CURSOR
-from models.genre import Genre
+# from models.genre import Genre
 from models.band import Band
 
 class Album:
   all = {}
 
-  def __init__(self, title, release_year, band_id, genre_id, id=None):
+  def __init__(self, title, release_year, band_id, id=None):
     self.id = id
     self.title = title
     self.release_year = release_year
     self.band_id = band_id
-    self.genre_id = genre_id
     type(self).all[self.id] = self
 
   @property
@@ -47,18 +46,6 @@ class Album:
         self._band_id = band_id
       except ValueError:
         raise ValueError("Album band ID must be an integer.")
-      
-  @property
-  def genre_id(self):
-    return self._genre_id
-  
-  @genre_id.setter
-  def genre_id(self, genre_id):
-    if isinstance(genre_id, int) and genre_id in Genre.all():
-      try:
-        self._genre_id = genre_id
-      except ValueError:
-        raise ValueError("Album genre ID must be an integer.")
       
   @classmethod
   def create_table(cls):

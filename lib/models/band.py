@@ -4,10 +4,9 @@ from lib.models.band_genre import BandGenre
 class Band:
   all = {}
 
-  def __init__(self, name, genre_id, members=[], id=None):
+  def __init__(self, name, members=[], id=None):
     self.id = id
     self.name = name
-    self.genre_id = genre_id
     self.members = members
     type(self).all[self.id] = self  
 
@@ -20,21 +19,11 @@ class Band:
     if isinstance(name, str) and len(name) > 2:
       self._name = name
     else:
-      raise ValueError("Band name must be a string with lenght more than 2 characters.")
-    
-  @property
-  def genre_id(self):
-    return self._genre_id
-  
-  @genre_id.setter
-  def genre_id(self, genre_id):
-    if isinstance(genre_id, int):
-      self._genre_id = genre_id
-    else:
-      raise ValueError("Genre id must be reference a genre in the database.")
-    
+      raise ValueError("Band name must be a string with lenght more than 2 characters.")    
+   
   def genres_of_band(self):
-    return [m for m in BandGenre.all if m.band == self]
+    return [bg.genre for bg in BandGenre.all if bg.band == self] 
+
 
   @classmethod
   def create_table(cls):

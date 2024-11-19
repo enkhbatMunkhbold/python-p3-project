@@ -22,7 +22,7 @@ class Genre:
       raise ValueError("Genre name must be a non-empty string.")
     
   def genres_of_band(self):
-    return [m for m in BandGenre.all if m.genre == self]
+    return [bg for bg in BandGenre.all if bg.genre == self]
 
   @classmethod
   def create_table(cls):
