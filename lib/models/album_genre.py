@@ -1,11 +1,11 @@
 from models.album import Album
 from models.genre import Genre
 
-class albumGenre:
+class AlbumGenre:
   all = {}
 
-  def __init__(self, genre, album):
+  def __init__(self, genre, album, id=None):
+    self.id = id
     self.genre = genre
     self.album = album
-    album.genres.append(self)
-    genre.albums.append(self)
+    type(self).all[self.id] = self
