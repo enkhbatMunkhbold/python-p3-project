@@ -1,6 +1,7 @@
 from models.__init__ import CONN, CURSOR
 from models.band import Band
 from models.band_genre import BandGenre
+from models.album_genre import AlbumGenre
 
 class Genre:
   all = {}
@@ -23,6 +24,9 @@ class Genre:
     
   def genres_of_band(self):
     return [bg for bg in BandGenre.all if bg.genre == self]
+  
+  def genres_of_album(self):
+    return [ag for ag in AlbumGenre.all if ag.genre == self]
 
   @classmethod
   def create_table(cls):
@@ -113,17 +117,17 @@ class Genre:
   
   def bands(self):    
     sql = """
-        SELECT * FROM bands
-        WHERE genre_id = ?
+        SELECT * FROM band_genre
+        WHERE genre = ?
     """
-    CURSOR.execute(sql, (self.id,),)
+    CURSOR.execute(sql, (self,),)
 
     rows = CURSOR.fetchall()
     return [Band.instance_from_db(row) for row in rows]
   
   def albums(self):
     sql = """
-        SELECT * FROM albums
-        WHERE genre_id = ?
+        SELECT * FROM album_genre
+        WHERE genre = ?
     """
-    CURSOR.execute(sql, (self.id,),)
+    CURSOR.execute(sql, (self,),)

@@ -1,5 +1,5 @@
 from models.__init__ import CONN, CURSOR
-from lib.models.band_genre import BandGenre
+from models.band_genre import BandGenre
 
 class Band:
   all = {}
@@ -31,9 +31,7 @@ class Band:
         CREATE TABLE IF NOT EXISTS bands(
         id INTEGER PRIMARY KEY,
         name TEXT,
-        genre_id INTEGER,
         members TEXT,
-        FOREIGN KEY(genre_id) REFERENCES genres(id))
     """
     CURSOR.execute(sql)
     CONN.commit()
