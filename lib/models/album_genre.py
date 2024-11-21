@@ -12,12 +12,20 @@ class AlbumGenre:
   @classmethod
   def create_table(cls):
     sql = """
-        CREATE TABLE IF NOT EXISTS album_genre(
+        CREATE TABLE IF NOT EXISTS album_genres(
         id INTEGER PRIMARY KEY,
         genre_id INTEGER,
         album_id INTEGER,
         FOREIGN KEY(genre_id) REFERENCES genre(id)
         FOREIGN KEY(album_id) REFERENCES album(id))
+    """
+    CURSOR.execute(sql)
+    CONN.commit()
+
+  @classmethod
+  def drop_table(cls):
+    sql = """
+        DROP TABLE IF EXISTS album_genres;
     """
     CURSOR.execute(sql)
     CONN.commit()

@@ -19,5 +19,13 @@ class BandGenre:
         FOREIGN KEY(band_id) REFERENCES band(id),
         FOREIGN KEY(genre_id) REFERENCES genre(id))
     """
-  CURSOR.execute(sql)
-  CONN.commit()
+    CURSOR.execute(sql)
+    CONN.commit()
+
+  @classmethod
+  def drop_table(cls):
+    sql = """
+        DROP TABLE IF EXISTS band_genres;
+    """
+    CURSOR.execute(sql)
+    CONN.commit()

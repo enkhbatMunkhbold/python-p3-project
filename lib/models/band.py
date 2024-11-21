@@ -31,7 +31,7 @@ class Band:
         CREATE TABLE IF NOT EXISTS bands(
         id INTEGER PRIMARY KEY,
         name TEXT,
-        members TEXT,
+        members TEXT[])
     """
     CURSOR.execute(sql)
     CONN.commit()
