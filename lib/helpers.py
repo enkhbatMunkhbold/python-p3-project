@@ -7,6 +7,7 @@ from models.band import Band
 
 def list_genres():
     return Genre.get_all()
+
 def list_of_bands():
     return Band.get_all()
 
@@ -15,7 +16,8 @@ def genre_menu():
     functions = [("C", "Create Genre", create_genre), ("U", "Update Genre's name", update_genre), ("D", "Delete", delete_genre), ("E", "Exit", exit_program)]
     selections = ["C", "U", "D", "E"]
     
-    #print Main Menu   
+    #print Main Menu
+    starting_lines_for_submenu()   
     if (list_genres()):
         print_genre_list()
     else:

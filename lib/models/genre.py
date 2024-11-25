@@ -9,7 +9,6 @@ class Genre:
   def __init__(self, name, id=None):
     self.id = id
     self.name = name
-    self.bands = []
     type(self).all[self.id] = self
 
   @property
@@ -18,19 +17,16 @@ class Genre:
   
   @name.setter
   def name(self, name):
-    if isinstance(name, str) and len(name):
+    if isinstance(name, str) and len(name) > 2:
       self._name = name
     else:
-      raise ValueError("Genre name must be a non-empty string.")
-    
-  def add_band(self, band):
-    BandGenre(self, band)
-    
-  # def genres_of_band(self):
-  #   return [bg for bg in BandGenre.all if bg.genre == self]
+      raise ValueError("Genre name must be a string with lenght more than 2 characters.")   
+
+  def band_genres(self):
+    return [bg for bg in BandGenre.all if bg.genre == self]
   
-  # def genres_of_album(self):
-  #   return [ag for ag in AlbumGenre.all if ag.genre == self]
+  def album_genre(self):
+    return [ag for ag in AlbumGenre.all if ag.genre == self]
 
   @classmethod
   def create_table(cls):

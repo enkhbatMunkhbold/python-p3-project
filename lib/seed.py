@@ -13,6 +13,11 @@ def seed_database():
     AlbumGenre.drop_table()
 
     Genre.create_table()
+    Genre.create("Pop")
+    Genre.create("Disco")
+    Genre.create("Rock")
+
+
     Band.create_table()
     Album.create_table()
     BandGenre.create_table()
