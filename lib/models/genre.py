@@ -6,7 +6,7 @@ from models.album_genre import AlbumGenre
 class Genre:
   all = {}
 
-  def __init__(self, name, id=None):
+  def __init__(self, id, name):
     self.id = id
     self.name = name
     type(self).all[self.id] = self

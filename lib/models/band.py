@@ -4,11 +4,10 @@ from models.band_genre import BandGenre
 class Band:
   all = {}
 
-  def __init__(self, id, name, genre_ids=None, album_ids=None):
+  def __init__(self, id, name, albums=None):
     self.id = id
     self.name = name
-    self.genre_ids = genre_ids if genre_ids else []
-    self.album_ids = album_ids if album_ids else []
+    self.albums = albums if albums else []
     type(self).all[self.id] = self  
 
   @property
@@ -22,8 +21,8 @@ class Band:
     else:
       raise ValueError("Band name must be a string with lenght more than 2 characters.")   
    
-  def band_genres(self):
-    return [bg for bg in BandGenre.all if bg.band == self] 
+  # def band_genres(self):
+  #   return [bg for bg in BandGenre.all if bg.band == self] 
 
   @classmethod
   def create_table(cls):
@@ -53,18 +52,18 @@ class Band:
     type(self).all[self.id] = self
 
   @classmethod
-  def create(cls, name, genre_ids, album_ids):
-    band = cls(name, genre_ids, album_ids)
+  def create(cls, name, albums):
+    band = cls(name, albums)
     band.save()
     return band
   
   def update(self):
     sql = """
         UPDATE bands
-        SET name = ?, genre_ids = ?, album_ids = ?
+        SET name = ?, album_ids = ?
         WHERE id = ?
     """
-    CURSOR.execute(sql, (self.name, self.genre_ids, self.album_ids, self.id))
+    CURSOR.execute(sql, (self.name, self.albums, self.id))
     CONN.commit()
 
   def delete(self):
@@ -80,10 +79,9 @@ class Band:
     band = cls.all.get(row[0])
     if band:
       band.name = row[1]
-      band.genre_ids = row[2]
-      band.album_ids = row[3]
+      band.albums = row[2]
     else:
-      band = cls(row[1], row[2], row[3])
+      band = cls(row[1], row[2])
       band.id = row[0]
       cls.all[band.id] = band
     return band
@@ -114,15 +112,15 @@ class Band:
     row = CURSOR.execute(sql, (name,)).fetchone()
     return cls.instance_from_db(row) if row else None
   
-  @classmethod
-  def get_by_genre(cls, id):
-    sql = """
-        SELECT * FROM bands
-        WHERE genre_ids == ?
-    """
+  # @classmethod
+  # def get_by_genre(cls, id):
+  #   sql = """
+  #       SELECT * FROM bands
+  #       WHERE genre_ids == ?
+  #   """
     
-    rows = CURSOR.execute(sql, (id,)).fetchall()
-    return [cls.instance_from_db(row) for row in rows]
+    # rows = CURSOR.execute(sql, (id,)).fetchall()
+    # return [cls.instance_from_db(row) for row in rows]
   
   def albums(self):
     sql = """

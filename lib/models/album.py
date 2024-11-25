@@ -5,7 +5,7 @@ from models.band import Band
 class Album:
   all = {}
 
-  def __init__(self, title, release_year, band_id, id=None):
+  def __init__(self, id, title, release_year, band_id):
     self.id = id
     self.title = title
     self.release_year = release_year
@@ -55,9 +55,7 @@ class Album:
         title TEXT,
         release_year INTEGER,
         band_id INTEGER,
-        genre_id INTEGER,
-        FOREIGN KEY(band_id) REFERENCES bands(id),
-        FOREIGN KEY(genre_id) REFERENCES genres(id))
+        FOREIGN KEY(band_id) REFERENCES bands(id))
     """
     CURSOR.execute(sql)
     CONN.commit()
@@ -72,26 +70,31 @@ class Album:
 
   def save(self):
     sql = """
-        INSERT INTO albums(title, release_year, band_id, genre_id) VALUES(?, ?, ?, ?)
+        INSERT INTO albums(title, release_year, band_id) VALUES(?, ?, ?)
     """
-    CURSOR.execute(sql, (self.title, self.release_year, self.band_id, self.genre_id))
+    CURSOR.execute(sql, (self.title, self.release_year, self.band_id))
     CONN.commit()
     self.id = CURSOR.lastrowid
     type(self).all[self.id] = self
 
   @classmethod
-  def create(cls, title, release_year, band_id, genre_id):
-    album = cls(title, release_year, band_id, genre_id)
-    album.save()
-    return album
+  def create(cls, id, title, release_year, band_id):
+    band = Band.all.get(band_id)
+    if band:
+      album = cls(id, title, release_year, band_id)
+      band.add_album(album)
+      return album
+    else:
+      raise ValueError(f"Band ID {band_id} not found")
+
   
   def update(self):
     sql = """
         UPDATE alubms
-        SET title = ?, release_year = ?, band_id = ?, genre_id = ?
+        SET title = ?, release_year = ?, band_id = ?
         WHERE id = ?
     """
-    CURSOR.execute(sql, (self.title, self.release_year, self.band_id, self.genre_id))
+    CURSOR.execute(sql, (self.title, self.release_year, self.band_id))
     CONN.commit()
 
   def delete(self):
@@ -109,9 +112,8 @@ class Album:
       album.title = row[1]
       album.release_year = row[2]
       album.band_id = row[3]
-      album.genre_id = row[4]
     else:
-      album = cls(row[1], row[2], row[3], row[4])
+      album = cls(row[1], row[2], row[3])
       album.id = row[0]
       cls.all[album.id] = album
     return album
@@ -142,11 +144,11 @@ class Album:
     row = CURSOR.execute(sql, (name,)).fetchone()
     return cls.instance_from_db(row) if row else None
   
-  @classmethod
-  def get_by_genre(cls, id):
-    sql = """
-        SELECT * FROM albums
-        WHERE genre_id == ?
-    """
-    rows = CURSOR.execute(sql, (id,)).fetchall()
-    return [cls.instance_from_db(row) for row in rows]
+  # @classmethod
+  # def get_by_genre(cls, id):
+  #   sql = """
+  #       SELECT * FROM albums
+  #       WHERE genre_id == ?
+  #   """
+  #   rows = CURSOR.execute(sql, (id,)).fetchall()
+  #   return [cls.instance_from_db(row) for row in rows]
