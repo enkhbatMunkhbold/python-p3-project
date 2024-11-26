@@ -5,7 +5,7 @@ from models.band import Band
 class Album:
   all = {}
 
-  def __init__(self, id, title, release_year, band_id):
+  def __init__(self, title, release_year, band_id, id=None):
     self.id = id
     self.title = title
     self.release_year = release_year

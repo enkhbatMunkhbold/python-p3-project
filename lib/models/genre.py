@@ -1,12 +1,12 @@
 from models.__init__ import CONN, CURSOR
 from models.band import Band
-from models.band_genre import BandGenre
-from models.album_genre import AlbumGenre
+# from models.band_genre import BandGenre
+# from models.album_genre import AlbumGenre
 
 class Genre:
   all = {}
 
-  def __init__(self, id, name):
+  def __init__(self, name, id=None):
     self.id = id
     self.name = name
     type(self).all[self.id] = self
@@ -22,11 +22,11 @@ class Genre:
     else:
       raise ValueError("Genre name must be a string with lenght more than 2 characters.")   
 
-  def band_genres(self):
-    return [bg for bg in BandGenre.all if bg.genre == self]
+  # def band_genres(self):
+  #   return [bg for bg in BandGenre.all if bg.genre == self]
   
-  def album_genre(self):
-    return [ag for ag in AlbumGenre.all if ag.genre == self]
+  # def album_genre(self):
+  #   return [ag for ag in AlbumGenre.all if ag.genre == self]
 
   @classmethod
   def create_table(cls):

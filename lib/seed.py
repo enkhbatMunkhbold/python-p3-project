@@ -19,9 +19,17 @@ def seed_database():
 
 
     Band.create_table()
-    Album.create_table()
-    BandGenre.create_table()
-    AlbumGenre.create_table()
+    Band.create("Abba", ("Ring Ring", "Waterloo", "Super Trouper"))
+    Band.create("AC/DC", ("High Voltage", "Highway to Hell", "Back In Black"))
+    Band.create("Queen", ("Queen II", "Sheer Heart Attack", "The Game"))
+
+    # Album.create_table()
+    # Album.create("Sheer Heart Attack")
+
+
+
+    # BandGenre.create_table()
+    # AlbumGenre.create_table()
 
 seed_database()
 print("Seeded database")
